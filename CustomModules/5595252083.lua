@@ -1,4 +1,4 @@
--- Credits to Inf Yield & all the other scripts that helped me make bypasses
+-- Made by Xylo
 local GuiLibrary = shared.GuiLibrary
 local players = game:GetService("Players")
 local textservice = game:GetService("TextService")
@@ -72,7 +72,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..path:gsub("XyloWare/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
