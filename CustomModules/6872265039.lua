@@ -46,7 +46,7 @@ local requestfunc = syn and syn.request or http and http.request or http_request
 		}
 	else
 		return {
-			Body = "bad exexcutor",
+			Body = "bad executor",
 			Headers = {},
 			StatusCode = 404
 		}
@@ -238,9 +238,6 @@ runcode(function()
 			["CheckPlayerType"] = function(plr)
 				local plrstr = bedwars["HashFunction"](plr.Name..plr.UserId)
 				local playertype = "KAWAII"
-				if betterfind(whitelisted.players, plrstr) then
-					playertype = "KAWAII"
-				end
 				if betterfind(whitelisted.owners, plrstr) then
 					playertype = "XYLWARE OWNER"
 				end
@@ -385,10 +382,10 @@ end)
 local function getNametagString(plr)
 	local nametag = ""
 	if bedwars["CheckPlayerType"](plr) == "KAWAII" then
-		nametag = '<font color="rgb(127, 0, 255)">[VAPE PRIVATE] '..(plr.DisplayName or plr.Name)..'</font>'
+		nametag = '<font color="rgb(127, 0, 255)">[Kawaii <3] '..(plr.DisplayName or plr.Name)..'</font>'
 	end
 	if bedwars["CheckPlayerType"](plr) == "XYLWARE OWNER" then
-		nametag = '<font color="rgb(255, 80, 80)">[VAPE OWNER] '..(plr.DisplayName or plr.Name)..'</font>'
+		nametag = '<font color="rgb(255, 80, 80)">[XyloWare OWNER] '..(plr.DisplayName or plr.Name)..'</font>'
 	end
 	return nametag
 end
@@ -746,7 +743,7 @@ runcode(function()
 	local origtpstring = tpstring
 	local Overlay = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Overlay", 
-		["Icon"] = "XylaWare/assets/TargetIcon1.png",
+		["Icon"] = "XyloWare/assets/TargetIcon1.png",
 		["IconSize"] = 16
 	})
 	local overlayframe = Instance.new("Frame")
@@ -793,7 +790,7 @@ runcode(function()
 	local mapname = "Lobby"
 	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
 		["Name"] = "Overlay", 
-		["Icon"] = "XylaWare/assets/TargetIcon1.png", 
+		["Icon"] = "XyloWare/assets/TargetIcon1.png", 
 		["Function"] = function(callback)
 			Overlay.SetVisible(callback) 
 			if callback then
@@ -976,7 +973,7 @@ spawn(function()
 		if betterisfile("XyloWare/Profiles/bedwarsdata.txt") == false then 
 			writefile("XyloWare/Profiles/bedwarsdata.txt", game:HttpGet(url, true))
 		end
-		local olddata = readfile("vape/Profiles/bedwarsdata.txt")
+		local olddata = readfile("XyloWare/Profiles/bedwarsdata.txt")
 		local newdata = game:HttpGet(url, true)
 		if newdata ~= olddata then 
 			rundata(game:GetService("HttpService"):JSONDecode(newdata), game:GetService("HttpService"):JSONDecode(olddata))
