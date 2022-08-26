@@ -46,7 +46,7 @@ local requestfunc = syn and syn.request or http and http.request or http_request
 		}
 	else
 		return {
-			Body = "bad exploit",
+			Body = "bad exexcutor",
 			Headers = {},
 			StatusCode = 404
 		}
@@ -69,9 +69,9 @@ end
 
 local function GetURL(scripturl)
 	if shared.VapeDeveloper then
-		return readfile("vape/"..scripturl)
+		return readfile("XyloWare/"..scripturl)
 	else
-		return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..scripturl, true)
+		return game:HttpGet("https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..scripturl, true)
 	end
 end
 
@@ -86,12 +86,6 @@ local whitelisted = {
 	owners = {},
 	chattags = {}
 }
-local whitelistsuc = nil
-task.spawn(function()
-	whitelistsuc = pcall(function()
-		whitelisted = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json", true))
-	end)
-end)
 
 local function getSpeedMultiplier(reduce)
 	local speed = 1
@@ -196,7 +190,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..path:gsub("XylaWare/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -223,7 +217,6 @@ end
 local newupdate = lplr.PlayerScripts.TS:WaitForChild("ui", 3) and true or false
 
 runcode(function()
-    local flaggedremotes = {"SelfReport"}
 
     getfunctions = function()
         local Flamework = require(repstorage["rbxts_include"]["node_modules"]["@flamework"].core.out).Flamework
@@ -242,19 +235,14 @@ runcode(function()
             ["sprintTable"] = KnitClient.Controllers.SprintController,
 			["WeldTable"] = require(repstorage.TS.util["weld-util"]).WeldUtil,
 			["QueueMeta"] = require(repstorage.TS.game["queue-meta"]).QueueMeta,
-			["CheckWhitelisted"] = function(plr, ownercheck)
-				local plrstr = bedwars["HashFunction"](plr.Name..plr.UserId)
-				local localstr = bedwars["HashFunction"](lplr.Name..lplr.UserId)
-				return ((ownercheck == nil and (betterfind(whitelisted.players, plrstr) or betterfind(whitelisted.owners, plrstr)) or ownercheck and betterfind(whitelisted.owners, plrstr))) and betterfind(whitelisted.players, localstr) == nil and betterfind(whitelisted.owners, localstr) == nil and true or false
-			end,
 			["CheckPlayerType"] = function(plr)
 				local plrstr = bedwars["HashFunction"](plr.Name..plr.UserId)
-				local playertype = "DEFAULT"
+				local playertype = "KAWAII"
 				if betterfind(whitelisted.players, plrstr) then
-					playertype = "VAPE PRIVATE"
+					playertype = "KAWAII"
 				end
 				if betterfind(whitelisted.owners, plrstr) then
-					playertype = "VAPE OWNER"
+					playertype = "XYLWARE OWNER"
 				end
 				return playertype
 			end,
@@ -291,11 +279,11 @@ runcode(function()
 			shared.vapebypassed = true
 		end
 		spawn(function()
-			local chatsuc, chatres = pcall(function() return game:GetService("HttpService"):JSONDecode(readfile("vape/Profiles/bedwarssettings.json")) end)
+			local chatsuc, chatres = pcall(function() return game:GetService("HttpService"):JSONDecode(readfile("XylaWare/Profiles/bedwarssettings.json")) end)
 			if chatsuc then
 				if chatres.crashed and (not chatres.said) then
 					pcall(function()
-						local notification1 = createwarning("Vape", "either ur poor or its a exploit moment", 10)
+						local notification1 = createwarning("XylaWare", "errort", 10)
 						notification1:GetChildren()[5].TextSize = 15
 						local notification2 = createwarning("Vape", "getconnections crashed, chat hook not loaded.", 10)
 						notification2:GetChildren()[5].TextSize = 13
@@ -304,7 +292,7 @@ runcode(function()
 						crashed = true,
 						said = true,
 					})
-					writefile("vape/Profiles/bedwarssettings.json", jsondata)
+					writefile("XylaWare/Profiles/bedwarssettings.json", jsondata)
 				end
 				if chatres.crashed then
 					return nil
@@ -313,30 +301,14 @@ runcode(function()
 						crashed = true,
 						said = false,
 					})
-					writefile("vape/Profiles/bedwarssettings.json", jsondata)
+					writefile("XylaWare/Profiles/bedwarssettings.json", jsondata)
 				end
 			else
 				local jsondata = game:GetService("HttpService"):JSONEncode({
 					crashed = true,
 					said = false,
 				})
-				writefile("vape/Profiles/bedwarssettings.json", jsondata)
-			end
-			repeat task.wait() until whitelistsuc
-			for i3,v3 in pairs(whitelisted.chattags) do
-				if v3.NameColor then
-					v3.NameColor = Color3.fromRGB(v3.NameColor.r, v3.NameColor.g, v3.NameColor.b)
-				end
-				if v3.ChatColor then
-					v3.ChatColor = Color3.fromRGB(v3.ChatColor.r, v3.ChatColor.g, v3.ChatColor.b)
-				end
-				if v3.Tags then
-					for i4,v4 in pairs(v3.Tags) do
-						if v4.TagColor then
-							v4.TagColor = Color3.fromRGB(v4.TagColor.r, v4.TagColor.g, v4.TagColor.b)
-						end
-					end
-				end
+				writefile("XylaWareProfiles/bedwarssettings.json", jsondata)
 			end
 			for i,v in pairs(getconnections(repstorage.DefaultChatSystemChatEvents.OnNewMessage.OnClientEvent)) do
 				if v.Function and #debug.getupvalues(v.Function) > 0 and type(debug.getupvalues(v.Function)[1]) == "table" and getmetatable(debug.getupvalues(v.Function)[1]) and getmetatable(debug.getupvalues(v.Function)[1]).GetChannel then
@@ -353,32 +325,29 @@ runcode(function()
 								if MessageData.FromSpeaker and players[MessageData.FromSpeaker] then
 									local plrtype = bedwars["CheckPlayerType"](players[MessageData.FromSpeaker])
 									local hash = bedwars["HashFunction"](players[MessageData.FromSpeaker].Name..players[MessageData.FromSpeaker].UserId)
-									if plrtype == "VAPE PRIVATE" then
+									if plrtype == "KAWAIIE" then
 										MessageData.ExtraData = {
 											NameColor = players[MessageData.FromSpeaker].Team == nil and Color3.new(0, 1, 1) or players[MessageData.FromSpeaker].TeamColor.Color,
 											Tags = {
 												table.unpack(MessageData.ExtraData.Tags),
 												{
 													TagColor = Color3.new(0.7, 0, 1),
-													TagText = "VAPE PRIVATE"
+													TagText = "KAWAII"
 												}
 											}
 										}
 									end
-									if plrtype == "VAPE OWNER" then
+									if plrtype == "XYLAWARE OWNER" then
 										MessageData.ExtraData = {
 											NameColor = players[MessageData.FromSpeaker].Team == nil and Color3.new(1, 0, 0) or players[MessageData.FromSpeaker].TeamColor.Color,
 											Tags = {
 												table.unpack(MessageData.ExtraData.Tags),
 												{
 													TagColor = Color3.new(1, 0.3, 0.3),
-													TagText = "VAPE OWNER"
+													TagText = "XYLAWARE OWNER"
 												}
 											}
 										}
-									end
-									if whitelisted.chattags[hash] then
-										MessageData.ExtraData = whitelisted.chattags[hash]
 									end
 								end
 								return addmessage(Self2, MessageData)
@@ -392,7 +361,7 @@ runcode(function()
 				crashed = false,
 				said = false,
 			})
-			writefile("vape/Profiles/bedwarssettings.json", jsondata)
+			writefile("XylaWare/Profiles/bedwarssettings.json", jsondata)
 		end)
 	end
 end)
@@ -415,21 +384,11 @@ end)
 
 local function getNametagString(plr)
 	local nametag = ""
-	if bedwars["CheckPlayerType"](plr) == "VAPE PRIVATE" then
+	if bedwars["CheckPlayerType"](plr) == "KAWAII" then
 		nametag = '<font color="rgb(127, 0, 255)">[VAPE PRIVATE] '..(plr.DisplayName or plr.Name)..'</font>'
 	end
-	if bedwars["CheckPlayerType"](plr) == "VAPE OWNER" then
+	if bedwars["CheckPlayerType"](plr) == "XYLWARE OWNER" then
 		nametag = '<font color="rgb(255, 80, 80)">[VAPE OWNER] '..(plr.DisplayName or plr.Name)..'</font>'
-	end
-	if whitelisted.chattags[bedwars["HashFunction"](plr.Name..plr.UserId)] then
-		local data = whitelisted.chattags[bedwars["HashFunction"](plr.Name..plr.UserId)]
-		local newnametag = ""
-		if data.Tags then
-			for i2,v2 in pairs(data.Tags) do
-				newnametag = newnametag..'<font color="rgb('..math.floor(v2.TagColor.r)..', '..math.floor(v2.TagColor.g)..', '..math.floor(v2.TagColor.b)..')">['..v2.TagText..']</font> '
-			end
-		end
-		nametag = newnametag..(newnametag.NameColor and '<font color="rgb('..math.floor(newnametag.NameColor.r)..', '..math.floor(newnametag.NameColor.g)..', '..math.floor(newnametag.NameColor.b)..')">' or '')..(plr.DisplayName or plr.Name)..(newnametag.NameColor and '</font>' or '')
 	end
 	return nametag
 end
@@ -529,7 +488,7 @@ local function renderNametag(plr)
 				spawn(function()
 					pcall(function() 
 						bedwars["getEntityTable"]:getEntity(plr):setNametag(nametag)
-						Cape(char, getcustomassetfunc("vape/assets/VapeCape.png"))
+						Cape(char, getcustomassetfunc("XylaWare/assets/VapeCape.png"))
 					end)
 				end)
 			end
@@ -539,19 +498,13 @@ local function renderNametag(plr)
 				spawn(function()
 					pcall(function() 
 						bedwars["getEntityTable"]:getEntity(plr):setNametag(nametag)
-						Cape(plr.Character, getcustomassetfunc("vape/assets/VapeCape.png"))
+						Cape(plr.Character, getcustomassetfunc("XylaWare/assets/VapeCape.png"))
 					end)
 				end)
 			end
 		end)
 	end
 end
-
-task.spawn(function()
-	repeat task.wait() until whitelistsuc
-	for i,v in pairs(players:GetChildren()) do renderNametag(v) end
-	players.PlayerAdded:connect(renderNametag)
-end)
 
 GuiLibrary["RemoveObject"]("SilentAimOptionsButton")
 GuiLibrary["RemoveObject"]("AutoClickerOptionsButton")
@@ -793,7 +746,7 @@ runcode(function()
 	local origtpstring = tpstring
 	local Overlay = GuiLibrary.CreateCustomWindow({
 		["Name"] = "Overlay", 
-		["Icon"] = "vape/assets/TargetIcon1.png",
+		["Icon"] = "XylaWare/assets/TargetIcon1.png",
 		["IconSize"] = 16
 	})
 	local overlayframe = Instance.new("Frame")
@@ -840,7 +793,7 @@ runcode(function()
 	local mapname = "Lobby"
 	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
 		["Name"] = "Overlay", 
-		["Icon"] = "vape/assets/TargetIcon1.png", 
+		["Icon"] = "XylaWare/assets/TargetIcon1.png", 
 		["Function"] = function(callback)
 			Overlay.SetVisible(callback) 
 			if callback then
@@ -992,9 +945,6 @@ spawn(function()
 					Duration = 30,
 				})
 			end
-			if datatab.KickUsers and datatab.KickUsers[tostring(lplr.UserId)] then
-				lplr:Kick(datatab.KickUsers[tostring(lplr.UserId)])
-			end
 		else
 			local newdatatab = {}
 			for i,v in pairs(datatab) do 
@@ -1013,9 +963,6 @@ spawn(function()
 					Text = "XyloWare isn't updated yet. Please wait for updates.",
 					Duration = 30,
 				})
-			end
-			if datatab.KickUsers and datatab.KickUsers[tostring(lplr.UserId)] then
-				lplr:Kick(datatab.KickUsers[tostring(lplr.UserId)])
 			end
 			if newdatatab.Announcement and newdatatab.Announcement.ExpireTime >= os.time() then 
 				spawn(function()
