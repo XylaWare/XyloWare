@@ -3,7 +3,7 @@ local checkpublicreponum = 0
 local checkpublicrepo
 checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/"..id..".lua",
+		Url = "https://raw.githubusercontent.com/XylaWare/XyloWare/edit/main/CustomModules/"..id..".lua",
 		Method = "GET"
 	}) end)
 	if not suc then
@@ -29,6 +29,16 @@ checkpublicrepo = function(id)
 		return req.Body
 	end
 	return nil
+end
+
+shared.CustomSaveVape = 6872274481
+if pcall(function() readfile("vape/CustomModules/6872265039.lua") end) then
+	loadstring(readfile("vape/CustomModules/6872265039.lua"))()
+else
+	local publicrepo = checkpublicrepo("6872265039")
+	if publicrepo then
+		loadstring(publicrepo)()
+	end
 end
 
 shared.CustomSaveVape = 6872274481
