@@ -1,4 +1,4 @@
--- Credits to Inf Yield & all the other scripts that helped me make bypasses
+-- Made by Xylo
 local GuiLibrary = shared.GuiLibrary
 local players = game:GetService("Players")
 local textservice = game:GetService("TextService")
@@ -434,31 +434,5 @@ runcode(function()
 	NameTagsDistance = NameTags.CreateToggle({
 		["Name"] = "Distance", 
 		["Function"] = function() end
-	})
-end)
-
-runcode(function()
-	local AutoToxic = {["Enabled"] = false}
-	local autotoxicconnection
-	AutoToxic = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "AutoToxic",
-		["Function"] = function(callback)
-			if callback then
-				spawn(function()
-					autotoxicconnection = game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 60):WaitForChild("Log", 60).OnClientEvent:connect(function(tab)
-						local killer = players[tab[1].Value.Name]
-						local killed = players[tab[2].Parent.Name]
-						if killer == lplr and tab[4] > 500 then
-							game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("L "..killed.Name, "All")
-						end
-					end)
-				end)
-			else
-				if autotoxicconnection then
-					autotoxicconnection:Disconnect()
-				end
-			end
-		end,
-		["HoverText"] = "says L to person killed with 500 time"
 	})
 end)
