@@ -57,7 +57,7 @@ local requestfunc = syn and syn.request or http and http.request or http_request
 		}
 	else
 		return {
-			Body = "bad exploit",
+			Body = "bad executor",
 			Headers = {},
 			StatusCode = 404
 		}
@@ -124,9 +124,9 @@ local clients = {
 }
 local function GetURL(scripturl)
 	if shared.VapeDeveloper then
-		return readfile("vape/"..scripturl)
+		return readfile("XyloWare/"..scripturl)
 	else
-		return game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..scripturl, true)
+		return game:HttpGet("https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..scripturl, true)
 	end
 end
 local shalib = loadstring(GetURL("Libraries/sha.lua"))()
@@ -139,7 +139,7 @@ local whitelisted = {
 local whitelistsuc = nil
 task.spawn(function()
 	whitelistsuc = pcall(function()
-		whitelisted = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/whitelists/main/whitelist2.json", true))
+		whitelisted = game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/XylaWare/whitelists/main/whitelist2.json", true))
 	end)
 end)
 local AnticheatBypassNumbers = {
@@ -270,7 +270,7 @@ end
 runcode(function()
 	local textlabel = Instance.new("TextLabel")
 	textlabel.Size = UDim2.new(1, 0, 0, 36)
-	textlabel.Text = "Moderators can ban you at any time, Always use alts."
+	textlabel.Text = "This should not be noticable by others, however always be careful about banwaves.."
 	textlabel.BackgroundTransparency = 1
 	textlabel.ZIndex = 10
 	textlabel.TextStrokeTransparency = 0
@@ -1352,11 +1352,8 @@ getfunctions()
 local function getNametagString(plr)
 	local nametag = ""
 	local hash = bedwars["HashFunction"](plr.Name..plr.UserId)
-	if bedwars["CheckPlayerType"](plr) == "VAPE PRIVATE" then
-		nametag = '<font color="rgb(127, 0, 255)">[VAPE PRIVATE] '..(plr.Name)..'</font>'
-	end
-	if bedwars["CheckPlayerType"](plr) == "VAPE OWNER" then
-		nametag = '<font color="rgb(255, 80, 80)">[VAPE OWNER] '..(plr.DisplayName or plr.Name)..'</font>'
+	if bedwars["CheckPlayerType"](plr) == "KAWAII" then
+		nametag = '<font color="rgb(127, 0, 255)">[Kawaii] '..(plr.Name)..'</font>'
 	end
 	if clients.ClientUsers[tostring(plr)] then
 		nametag = '<font color="rgb(255, 255, 0)">['..clients.ClientUsers[tostring(plr)]..'] '..(plr.DisplayName or plr.Name)..'</font>'
@@ -1376,7 +1373,7 @@ end
 
 local function Wings(char, texture)
 	for i,v in pairs(char:GetDescendants()) do
-		if v.Name == "WIngs" then
+		if v.Name == "Wings" then
 			v:Remove()
 		end
 	end
@@ -2489,188 +2486,6 @@ local function getbestside(pos)
 end
 
 runcode(function()
-	local BedProtector = {["Enabled"] = false}
-	local bedprotector1stlayer = {
-		vec3(0, 3, 0),
-		vec3(0, 3, 3),
-		vec3(3, 0, 0),
-		vec3(3, 0, 3),
-		vec3(-3, 0, 0),
-		vec3(-3, 0, 3),
-		vec3(0, 0, 6),
-		vec3(0, 0, -3)
-	}
-	local bedprotector2ndlayer = {
-		vec3(0, 6, 0),
-		vec3(0, 6, 3),
-		vec3(0, 3, 6),
-		vec3(0, 3, -3),
-		vec3(0, 0, -6),
-		vec3(0, 0, 9),
-		vec3(3, 3, 0),
-		vec3(3, 3, 3),
-		vec3(3, 0, 6),
-		vec3(3, 0, -3),
-		vec3(6, 0, 3),
-		vec3(6, 0, 0),
-		vec3(-3, 3, 3),
-		vec3(-3, 3, 0),
-		vec3(-6, 0, 3),
-		vec3(-6, 0, 0),
-		vec3(-3, 0, 6),
-		vec3(-3, 0, -3),
-	}
-
-	local function getItemFromList(list)
-		local selecteditem
-		for i3,v3 in pairs(list) do
-			local item = getItem(v3)
-			if item then 
-				selecteditem = item
-				break
-			end
-		end
-		return selecteditem
-	end
-
-	local function placelayer(layertab, obj, selecteditems)
-		for i2,v2 in pairs(layertab) do
-			local selecteditem = getItemFromList(selecteditems)
-			if selecteditem then
-				bedwars["placeBlock"](obj.Position + v2, selecteditem.itemType)
-			else
-				return false
-			end
-		end
-		return true
-	end
-
-	local bedprotectorrange = {["Value"] = 1}
-	BedProtector = GuiLibrary["ObjectsThatCanBeSaved"]["WorldWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "BedProtector",
-		["Function"] = function(callback)
-            if callback then
-                task.spawn(function()
-                    for i, obj in pairs(bedwars["BedTable"]) do
-                        if entity.isAlive and obj:GetAttribute("Team"..lplr:GetAttribute("Team").."NoBreak") and obj.Parent ~= nil then
-                            if (entity.character.HumanoidRootPart.Position - obj.Position).magnitude <= bedprotectorrange["Value"] then
-                                local firstlayerplaced = placelayer(bedprotector1stlayer, obj, {"obsidian", "stone_brick", "plank_oak", getwool()})
-							    if firstlayerplaced then
-									placelayer(bedprotector2ndlayer, obj, {getwool()})
-							    end
-                            end
-                            break
-                        end
-                    end
-                    BedProtector["ToggleButton"](false)
-                end)
-            end
-		end,
-		["HoverText"] = "Automatically places a bed defense (Toggle)"
-	})
-	bedprotectorrange = BedProtector.CreateSlider({
-		["Name"] = "Place range",
-		["Min"] = 1, 
-		["Max"] = 20, 
-		["Function"] = function(val) end, 
-		["Default"] = 20
-	})
-end)
-
-runcode(function()
-	local ChestStealer = {["Enabled"] = false}
-	local ChestStealerDistance = {["Value"] = 1}
-	local ChestStealerDelay = {["Value"] = 1}
-	local ChestStealerOpen = {["Enabled"] = false}
-	local ChestStealerSkywars = {["Enabled"] = true}
-
-	local cheststealerfuncs = {
-		Open = function()
-			if bedwars["AppController"]:isAppOpen("ChestApp") then
-				local chest = lplr.Character:FindFirstChild("ObservedChestFolder")
-				local chestitems = chest and chest.Value and chest.Value:GetChildren() or {}
-				if #chestitems > 0 then
-					for i3,v3 in pairs(chestitems) do
-						if v3:IsA("Accessory") then
-							task.spawn(function()
-								pcall(function()
-									bedwars["ClientHandler"]:GetNamespace("Inventory"):Get("ChestGetItem"):CallServer(chest.Value, v3)
-								end)
-							end)
-							task.wait(ChestStealerDelay["Value"] / 100)
-						end
-					end
-				end
-			end
-		end,
-		Closed = function()
-			for i,v in pairs(collectionservice:GetTagged("chest")) do
-				if (entity.character.HumanoidRootPart.Position - v.Position).magnitude <= ChestStealerDistance["Value"] and v:FindFirstChild("ChestFolderValue") then
-					local chest = v:FindFirstChild("ChestFolderValue")
-					chest = chest and chest.Value or nil
-					local chestitems = chest and chest:GetChildren() or {}
-					if #chestitems > 0 then
-						bedwars["ClientHandler"]:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(chest)
-						for i3,v3 in pairs(chestitems) do
-							if v3:IsA("Accessory") then
-								task.spawn(function()
-									pcall(function()
-										bedwars["ClientHandler"]:GetNamespace("Inventory"):Get("ChestGetItem"):CallServer(v.ChestFolderValue.Value, v3)
-									end)
-								end)
-								task.wait(ChestStealerDelay["Value"] / 100)
-							end
-						end
-						bedwars["ClientHandler"]:GetNamespace("Inventory"):Get("SetObservedChest"):SendToServer(nil)
-					end
-				end
-			end
-		end
-	}
-
-	ChestStealer = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "ChestStealer",
-		["Function"] = function(callback)
-			if callback then
-				task.spawn(function()
-					repeat task.wait() until queueType ~= "bedwars_test"
-					if (not ChestStealerSkywars["Enabled"]) or queueType:find("skywars") then
-						repeat 
-							task.wait(0.1)
-							if entity.isAlive then
-								cheststealerfuncs[ChestStealerOpen["Enabled"] and "Open" or "Closed"]()
-							end
-						until (not ChestStealer["Enabled"])
-					end
-				end)
-			end
-		end,
-		["HoverText"] = "Grabs items from near chests."
-	})
-	ChestStealerDistance = ChestStealer.CreateSlider({
-		["Name"] = "Range",
-		["Min"] = 0,
-		["Max"] = 18,
-		["Function"] = function() end,
-		["Default"] = 18
-	})
-	ChestStealerDelay = ChestStealer.CreateSlider({
-		["Name"] = "Delay",
-		["Min"] = 1,
-		["Max"] = 50,
-		["Function"] = function() end,
-		["Default"] = 1
-	})
-	ChestStealerOpen = ChestStealer.CreateToggle({
-		["Name"] = "GUI Check",
-		["Function"] = function() end
-	})
-	ChestStealerSkywars = ChestStealer.CreateToggle({
-		["Name"] = "Only Skywars",
-		["Function"] = function() end,
-		["Default"] = true
-	})
-
 	local OpenEnderchest = {["Enabled"] = false}
 	OpenEnderchest = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "OpenEnderchest",
@@ -4970,32 +4785,6 @@ runcode(function()
 end)
 
 runcode(function()
-        local disabler = {["Enabled"] = false}    
-        disabler = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
-            ["Name"] = "ForcefieldDisabler",
-            ["Function"] = function(callback)
-                if callback then
-                if (matchState == 0 or lplr.Character:FindFirstChildWhichIsA("ForceField")) then 
-					task.spawn(function()
-						entity.character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
-						entity.character.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
-						repeat task.wait() until entity.character.Humanoid.MoveDirection == Vector3.zero 
-						task.wait(0.2)
-						entity.character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
-						entity.character.Humanoid:ChangeState(Enum.HumanoidStateType.Running)
-						game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged.ResetCharacter:FireServer()
-						createwarning("CatV5", "Disabled anticheat!", 5)
-					end)
-				else
-					createwarning("CatV5", "Failed to disable anticheat!", 5)
-				end
-				disabler["ToggleButton"](false)
-			end
-		end
-        })
-end)
-
-runcode(function()
 	local chatdisabler = {["Enabled"] = false}
 	chatdisabler = GuiLibrary["ObjectsThatCanBeSaved"]["UtilityWindow"]["Api"].CreateOptionsButton({
 		["Name"] = "ChatDisabler",
@@ -5255,14 +5044,14 @@ runcode(function()
 				vapecapeconnection = lplr.CharacterAdded:connect(function(char)
 					task.spawn(function()
 						pcall(function() 
-							Cape(char, getcustomassetfunc("vape/assets/VapeCape.png"))
+							Cape(char, getcustomassetfunc("XyloWare/assets/VapeCape.png"))
 						end)
 					end)
 				end)
 				if lplr.Character then
 					task.spawn(function()
 						pcall(function() 
-							Cape(lplr.Character, getcustomassetfunc("vape/assets/VapeCape.png"))
+							Cape(lplr.Character, getcustomassetfunc("XyloWare/assets/VapeCape.png"))
 						end)
 					end)
 				end
@@ -5439,7 +5228,7 @@ runcode(function()
 
 	GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
 		["Name"] = "Overlay", 
-		["Icon"] = "vape/assets/TargetIcon1.png", 
+		["Icon"] = "XyloWare/assets/TargetIcon1.png", 
 		["Function"] = function(callback)
 			Overlay.SetVisible(callback) 
 		end, 
@@ -5456,14 +5245,14 @@ runcode(function()
 				vapecapeconnection = lplr.CharacterAdded:connect(function(char)
 					task.spawn(function()
 						pcall(function() 
-							Wings(char, getcustomassetfunc("vape/assets/DragonWing.png"))
+							Wings(char, getcustomassetfunc("XyloWare/assets/DragonWing.png"))
 						end)
 					end)
 				end)
 				if lplr.Character then
 					task.spawn(function()
 						pcall(function() 
-							Wings(lplr.Character, getcustomassetfunc("vape/assets/DragonWing.png"))
+							Wings(lplr.Character, getcustomassetfunc("XyloWare/assets/DragonWing.png"))
 						end)
 					end)
 				end
@@ -5473,7 +5262,7 @@ runcode(function()
 				end
 				if lplr.Character then
 					for i,v in pairs(lplr.Character:GetDescendants()) do
-						if v.Name == "DragonWIngs" then
+						if v.Name == "DragonWings" then
 							v:Remove()
 						end
 					end
@@ -5891,7 +5680,7 @@ runcode(function()
 end)
 
 task.spawn(function()
-	local url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/bedwarsdata"
+	local url = "https://raw.githubusercontent.com/XylaWare/XyloWare/main/CustomModules/bedwarsdata"
 	local function createannouncement(announcetab)
 		local notifyframereal = Instance.new("TextButton")
 		notifyframereal.AnchorPoint = Vector2.new(0.5, 0)
@@ -5954,7 +5743,7 @@ task.spawn(function()
 		notifyframelistnotifyframeaspect.BorderSizePixel = 0
 		notifyframelistnotifyframeaspect.Size = UDim2.new(1, 0, 0.6, 0)
 		notifyframelistnotifyframeaspect.Font = Enum.Font.Roboto
-		notifyframelistnotifyframeaspect.Text = "Vape Announcement"
+		notifyframelistnotifyframeaspect.Text = "XyloWare Announcement"
 		notifyframelistnotifyframeaspect.TextColor3 = Color3.fromRGB(255, 255, 255)
 		notifyframelistnotifyframeaspect.TextScaled = true
 		notifyframelistnotifyframeaspect.TextWrapped = true
@@ -6012,8 +5801,8 @@ task.spawn(function()
 					GuiLibrary.SelfDestruct()
 				end))
 				game:GetService("StarterGui"):SetCore("SendNotification", {
-					Title = "Vape",
-					Text = "Vape is currently disabled, check the discord for updates discord.gg/vxpe",
+					Title = "XyloWare",
+					Text = "XyloWare is currently disabled, ask Xylo for updates,
 					Duration = 30,
 				})
 			end
@@ -6034,8 +5823,8 @@ task.spawn(function()
 					GuiLibrary.SelfDestruct()
 				end))
 				game:GetService("StarterGui"):SetCore("SendNotification", {
-					Title = "Vape",
-					Text = "Vape is currently disabled, check the discord for updates discord.gg/vxpe",
+					Title = "XyloWare",
+					Text = "XyloWare is currently disabled, check the discord for updates",
 					Duration = 30,
 				})
 			end
@@ -6051,15 +5840,15 @@ task.spawn(function()
 	end
 
 	pcall(function()
-		if betterisfile("vape/Profiles/bedwarsdata.txt") == false then 
-			writefile("vape/Profiles/bedwarsdata.txt", game:HttpGet(url, true))
+		if betterisfile("XyloWare/Profiles/bedwarsdata.txt") == false then 
+			writefile("XyloWare/Profiles/bedwarsdata.txt", game:HttpGet(url, true))
 		end
-		local olddata = readfile("vape/Profiles/bedwarsdata.txt")
+		local olddata = readfile("XyloWare/Profiles/bedwarsdata.txt")
 		local newdata = game:HttpGet(url, true)
 		if newdata ~= olddata then 
 			rundata(game:GetService("HttpService"):JSONDecode(newdata), game:GetService("HttpService"):JSONDecode(olddata))
 			olddata = newdata
-			writefile("vape/Profiles/bedwarsdata.txt", newdata)
+			writefile("XyloWare/Profiles/bedwarsdata.txt", newdata)
 		else
 			rundata(game:GetService("HttpService"):JSONDecode(olddata))
 		end
@@ -6069,7 +5858,7 @@ task.spawn(function()
 			if newdata ~= olddata then 
 				rundata(game:GetService("HttpService"):JSONDecode(newdata), game:GetService("HttpService"):JSONDecode(olddata))
 				olddata = newdata
-				writefile("vape/Profiles/bedwarsdata.txt", newdata)
+				writefile("XyloWare/Profiles/bedwarsdata.txt", newdata)
 			end
 		until uninjectflag
 	end)
