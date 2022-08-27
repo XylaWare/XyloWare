@@ -1,7 +1,5 @@
 --[[ 
-	Credits
-	Infinite Yield - Blink (backtrack), Freecam and SpinBot (spin / fling)
-	Please notify me if you need credits
+	Made by Xyla
 ]]
 local GuiLibrary = shared.GuiLibrary
 local players = game:GetService("Players")
@@ -23,12 +21,12 @@ local betterisfile = function(file)
 end
 local function GetURL(scripturl)
 	if shared.VapeDeveloper then
-		if not betterisfile("vape/"..scripturl) then
-			error("File not found : vape/"..scripturl)
+		if not betterisfile("XyloWare/"..scripturl) then
+			error("File not found : XyloWare/"..scripturl)
 		end
 		return readfile("vape/"..scripturl)
 	else
-		local res = game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..scripturl, true)
+		local res = game:HttpGet("https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..scripturl, true)
 		assert(res ~= "404: Not Found", "File not found")
 		return res
 	end
@@ -136,7 +134,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..path:gsub("XyloWare/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -278,7 +276,7 @@ local radarcam = Instance.new("Camera")
 radarcam.FieldOfView = 45
 local Radar = GuiLibrary.CreateCustomWindow({
 	["Name"] = "Radar", 
-	["Icon"] = "vape/assets/RadarIcon1.png",
+	["Icon"] = "XyloWare/assets/RadarIcon1.png",
 	["IconSize"] = 16
 })
 local RadarColor = Radar.CreateColorSlider({
@@ -335,7 +333,7 @@ players.PlayerRemoving:connect(function(plr)
 end)
 GuiLibrary["ObjectsThatCanBeSaved"]["GUIWindow"]["Api"].CreateCustomToggle({
 	["Name"] = "Radar", 
-	["Icon"] = "vape/assets/RadarIcon2.png", 
+	["Icon"] = "XyloWare/assets/RadarIcon2.png", 
 	["Function"] = function(callback)
 		Radar.SetVisible(callback) 
 		if callback then
@@ -2397,14 +2395,14 @@ runcode(function()
 				vapecapeconnection = lplr.CharacterAdded:connect(function(char)
 					spawn(function()
 						pcall(function() 
-							Cape(char, getcustomassetfunc("vape/assets/VapeCape.png"))
+							Cape(char, getcustomassetfunc("XyloWare/assets/VapeCape.png"))
 						end)
 					end)
 				end)
 				if lplr.Character then
 					spawn(function()
 						pcall(function() 
-							Cape(lplr.Character, getcustomassetfunc("vape/assets/VapeCape.png"))
+							Cape(lplr.Character, getcustomassetfunc("XyloWare/assets/VapeCape.png"))
 						end)
 					end)
 				end
