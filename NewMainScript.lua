@@ -1,19 +1,19 @@
 repeat task.wait() until game:IsLoaded() == true
 local injected = true
 local oldrainbow = false
-local customdir = (shared.VapePrivate and "vapeprivate/" or "vape/")
+local customdir = (shared.VapePrivate and "XyloWareprivate/" or "XyloWare/")
 local betterisfile = function(file)
 	local suc, res = pcall(function() return readfile(file) end)
 	return suc and res ~= nil
 end
 local function GetURL(scripturl)
 	if shared.VapeDeveloper then
-		if not betterisfile("vape/"..scripturl) then
-			error("File not found : vape/"..scripturl)
+		if not betterisfile("XyloWare/"..scripturl) then
+			error("File not found : XyloWare/"..scripturl)
 		end
-		return readfile("vape/"..scripturl)
+		return readfile("XyloWare/"..scripturl)
 	else
-		local res = game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..scripturl, true)
+		local res = game:HttpGet("https://raw.githubusercontent.com/XylaWare/XyloWare/main/"..scripturl, true)
 		assert(res ~= "404: Not Found", "File not found")
 		return res
 	end
@@ -29,7 +29,7 @@ local requestfunc = syn and syn.request or http and http.request or http_request
 		}
 	else
 		return {
-			Body = "bad exploit",
+			Body = "bad executor",
 			Headers = {},
 			StatusCode = 404
 		}
@@ -38,7 +38,7 @@ end
 
 local function checkassetversion()
 	local req = requestfunc({
-		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/assetsversion.dat",
+		Url = "https://raw.githubusercontent.com/XylaWare/XyloWare/main/assetsversion.dat",
 		Method = "GET"
 	})
 	if req.StatusCode == 200 then
@@ -49,12 +49,12 @@ local function checkassetversion()
 end
 
 if not (getasset and requestfunc and queueteleport) then
-	print("Vape not supported with your exploit.")
+	print("XyloWare not supported with your executor.")
 	return
 end
 
 if shared.VapeExecuted then
-	error("Vape Already Injected")
+	error("XyloWare Already Running")
 	return
 else
 	shared.VapeExecuted = true
@@ -63,11 +63,11 @@ end
 if isfolder(customdir:gsub("/", "")) == false then
 	makefolder(customdir:gsub("/", ""))
 end
-if isfolder("vape") == false then
-	makefolder("vape")
+if isfolder("XyloWare") == false then
+	makefolder("XyloWare")
 end
-if not betterisfile("vape/assetsversion.dat") then
-	writefile("vape/assetsversion.dat", "1")
+if not betterisfile("XyloWare/assetsversion.dat") then
+	writefile("XyloWare/assetsversion.dat", "1")
 end
 if isfolder(customdir.."CustomModules") == false then
 	makefolder(customdir.."CustomModules")
@@ -75,22 +75,22 @@ end
 if isfolder(customdir.."Profiles") == false then
 	makefolder(customdir.."Profiles")
 end
-if not betterisfile("vape/language.dat") then
-	writefile("vape/language.dat", "en-us")
+if not betterisfile("XyloWare/language.dat") then
+	writefile("XyloWare/language.dat", "en-us")
 end
 local assetver = checkassetversion()
-if assetver and assetver > readfile("vape/assetsversion.dat") then
+if assetver and assetver > readfile("XyloWare/assetsversion.dat") then
 	if shared.VapeDeveloper == nil then
-		if isfolder("vape/assets") then
+		if isfolder("XyloWare/assets") then
 			if delfolder then
-				delfolder("vape/assets")
+				delfolder("XyloWareassets")
 			end
 		end
-		writefile("vape/assetsversion.dat", assetver)
+		writefile("XyloWare/assetsversion.dat", assetver)
 	end
 end
-if isfolder("vape/assets") == false then
-	makefolder("vape/assets")
+if isfolder("XyloWare/assets") == false then
+	makefolder("XyloWare/assets")
 end
 
 local GuiLibrary = loadstring(GetURL("NewGuiLibrary.lua"))()
@@ -101,7 +101,7 @@ local checkpublicreponum = 0
 local checkpublicrepo
 checkpublicrepo = function(id)
 	local suc, req = pcall(function() return requestfunc({
-		Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/CustomModules/"..id..".lua",
+		Url = "https://raw.githubusercontent.com/XylaWare/XyloWare/main/CustomModules/"..id..".lua",
 		Method = "GET"
 	}) end)
 	if not suc then
@@ -146,7 +146,7 @@ local function getcustomassetfunc(path)
 			textlabel:Remove()
 		end)
 		local req = requestfunc({
-			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("vape/assets", "assets"),
+			Url = "https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/"..path:gsub("XyloWare/assets", "assets"),
 			Method = "GET"
 		})
 		writefile(path, req.Body)
@@ -170,68 +170,68 @@ end)
 local GUI = GuiLibrary.CreateMainWindow()
 local Combat = GuiLibrary.CreateWindow({
 	["Name"] = "Combat", 
-	["Icon"] = "vape/assets/CombatIcon.png", 
+	["Icon"] = "XyloWare/assets/CombatIcon.png", 
 	["IconSize"] = 15
 })
 local Blatant = GuiLibrary.CreateWindow({
 	["Name"] = "Blatant", 
-	["Icon"] = "vape/assets/BlatantIcon.png", 
+	["Icon"] = "XyloWare/assets/BlatantIcon.png", 
 	["IconSize"] = 16
 })
 local Render = GuiLibrary.CreateWindow({
 	["Name"] = "Render", 
-	["Icon"] = "vape/assets/RenderIcon.png", 
+	["Icon"] = "XyloWare/assets/RenderIcon.png", 
 	["IconSize"] = 17
 })
 local Utility = GuiLibrary.CreateWindow({
 	["Name"] = "Utility", 
-	["Icon"] = "vape/assets/UtilityIcon.png", 
+	["Icon"] = "XyloWare/assets/UtilityIcon.png", 
 	["IconSize"] = 17
 })
 local World = GuiLibrary.CreateWindow({
 	["Name"] = "World", 
-	["Icon"] = "vape/assets/WorldIcon.png", 
+	["Icon"] = "XyloWare/assets/WorldIcon.png", 
 	["IconSize"] = 16
 })
 local Friends = GuiLibrary.CreateWindow2({
 	["Name"] = "Friends", 
-	["Icon"] = "vape/assets/FriendsIcon.png", 
+	["Icon"] = "XyloWare/assets/FriendsIcon.png", 
 	["IconSize"] = 17
 })
 local Profiles = GuiLibrary.CreateWindow2({
 	["Name"] = "Profiles", 
-	["Icon"] = "vape/assets/ProfilesIcon.png", 
+	["Icon"] = "XyloWare/assets/ProfilesIcon.png", 
 	["IconSize"] = 19
 })
 GUI.CreateDivider()
 GUI.CreateButton({
 	["Name"] = "Combat", 
 	["Function"] = function(callback) Combat.SetVisible(callback) end, 
-	["Icon"] = "vape/assets/CombatIcon.png", 
+	["Icon"] = "XyloWare/assets/CombatIcon.png", 
 	["IconSize"] = 15
 })
 GUI.CreateButton({
 	["Name"] = "Blatant", 
 	["Function"] = function(callback) Blatant.SetVisible(callback) end, 
-	["Icon"] = "vape/assets/BlatantIcon.png", 
+	["Icon"] = "XyloWare/assets/BlatantIcon.png", 
 	["IconSize"] = 16
 })
 GUI.CreateButton({
 	["Name"] = "Render", 
 	["Function"] = function(callback) Render.SetVisible(callback) end, 
-	["Icon"] = "vape/assets/RenderIcon.png", 
+	["Icon"] = "XyloWare/assets/RenderIcon.png", 
 	["IconSize"] = 17
 })
 GUI.CreateButton({
 	["Name"] = "Utility", 
 	["Function"] = function(callback) Utility.SetVisible(callback) end, 
-	["Icon"] = "vape/assets/UtilityIcon.png", 
+	["Icon"] = "XyloWare/assets/UtilityIcon.png", 
 	["IconSize"] = 17
 })
 GUI.CreateButton({
 	["Name"] = "World", 
 	["Function"] = function(callback) World.SetVisible(callback) end, 
-	["Icon"] = "vape/assets/WorldIcon.png", 
+	["Icon"] = "XyloWare/assets/WorldIcon.png", 
 	["IconSize"] = 16
 })
 GUI.CreateDivider("MISC")
@@ -344,7 +344,7 @@ ProfilesTextList = Profiles.CreateTextList({
 		bindbkg.Visible = GuiLibrary["Profiles"][profilename]["Keybind"] ~= ""
 		bindbkg.Parent = obj
 		local bindimg = Instance.new("ImageLabel")
-		bindimg.Image = getcustomassetfunc("vape/assets/KeybindIcon.png")
+		bindimg.Image = getcustomassetfunc("XyloWare/assets/KeybindIcon.png")
 		bindimg.BackgroundTransparency = 1
 		bindimg.Size = UDim2.new(0, 12, 0, 12)
 		bindimg.Position = UDim2.new(0, 4, 0, 5)
@@ -408,14 +408,14 @@ ProfilesTextList = Profiles.CreateTextList({
 			end
 		end)
 		bindbkg.MouseEnter:connect(function() 
-			bindimg.Image = getcustomassetfunc("vape/assets/PencilIcon.png") 
+			bindimg.Image = getcustomassetfunc("XyloWare/assets/PencilIcon.png") 
 			bindimg.Visible = true
 			bindtext.Visible = false
 			bindbkg.Size = UDim2.new(0, 20, 0, 21)
 			bindbkg.Position = UDim2.new(1, -50, 0, 6)
 		end)
 		bindbkg.MouseLeave:connect(function() 
-			bindimg.Image = getcustomassetfunc("vape/assets/KeybindIcon.png")
+			bindimg.Image = getcustomassetfunc("XyloWare/assets/KeybindIcon.png")
 			if GuiLibrary["Profiles"][profilename]["Keybind"] ~= "" then
 				bindimg.Visible = false
 				bindtext.Visible = true
@@ -469,7 +469,7 @@ local OnlineProfilesButtonImage = Instance.new("ImageLabel")
 OnlineProfilesButtonImage.BackgroundTransparency = 1
 OnlineProfilesButtonImage.Position = UDim2.new(0, 14, 0, 7)
 OnlineProfilesButtonImage.Size = UDim2.new(0, 17, 0, 16)
-OnlineProfilesButtonImage.Image = getcustomassetfunc("vape/assets/OnlineProfilesButton.png")
+OnlineProfilesButtonImage.Image = getcustomassetfunc("XyloWare/assets/OnlineProfilesButton.png")
 OnlineProfilesButtonImage.ImageColor3 = Color3.fromRGB(121, 121, 121)
 OnlineProfilesButtonImage.ZIndex = 1
 OnlineProfilesButtonImage.Active = false
@@ -490,7 +490,7 @@ OnlineProfilesExitButton.Name = "OnlineProfilesExitButton"
 OnlineProfilesExitButton.ImageColor3 = Color3.fromRGB(121, 121, 121)
 OnlineProfilesExitButton.Size = UDim2.new(0, 24, 0, 24)
 OnlineProfilesExitButton.AutoButtonColor = false
-OnlineProfilesExitButton.Image = getcustomassetfunc("vape/assets/ExitIcon1.png")
+OnlineProfilesExitButton.Image = getcustomassetfunc("XyloWare/assets/ExitIcon1.png")
 OnlineProfilesExitButton.Visible = true
 OnlineProfilesExitButton.Position = UDim2.new(1, -31, 0, 8)
 OnlineProfilesExitButton.BackgroundColor3 = Color3.fromRGB(26, 25, 26)
@@ -507,7 +507,7 @@ end)
 local OnlineProfilesFrameShadow = Instance.new("ImageLabel")
 OnlineProfilesFrameShadow.AnchorPoint = Vector2.new(0.5, 0.5)
 OnlineProfilesFrameShadow.Position = UDim2.new(0.5, 0, 0.5, 0)
-OnlineProfilesFrameShadow.Image = getcustomassetfunc("vape/assets/WindowBlur.png")
+OnlineProfilesFrameShadow.Image = getcustomassetfunc("XyloWare/assets/WindowBlur.png")
 OnlineProfilesFrameShadow.BackgroundTransparency = 1
 OnlineProfilesFrameShadow.ZIndex = -1
 OnlineProfilesFrameShadow.Size = UDim2.new(1, 6, 1, 6)
@@ -517,7 +517,7 @@ OnlineProfilesFrameShadow.SliceCenter = Rect.new(10, 10, 118, 118)
 OnlineProfilesFrameShadow.Parent = OnlineProfilesFrame
 local OnlineProfilesFrameIcon = Instance.new("ImageLabel")
 OnlineProfilesFrameIcon.Size = UDim2.new(0, 19, 0, 16)
-OnlineProfilesFrameIcon.Image = getcustomassetfunc("vape/assets/ProfilesIcon.png")
+OnlineProfilesFrameIcon.Image = getcustomassetfunc("XyloWare/assets/ProfilesIcon.png")
 OnlineProfilesFrameIcon.Name = "WindowIcon"
 OnlineProfilesFrameIcon.BackgroundTransparency = 1
 OnlineProfilesFrameIcon.Position = UDim2.new(0, 10, 0, 13)
@@ -587,7 +587,7 @@ OnlineProfilesButton.MouseButton1Click:connect(function()
 	if profilesloaded == false then
 		local onlineprofiles = {}
 		local success, result = pcall(function()
-			return game:GetService("HttpService"):JSONDecode((shared.VapeDeveloper and readfile("vape/OnlineProfiles.vapeonline") or game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/OnlineProfiles.vapeonline", true)))
+			return game:GetService("HttpService"):JSONDecode((shared.VapeDeveloper and readfile("XyloWare/OnlineProfiles.vapeonline") or game:HttpGet("https://raw.githubusercontent.com/XyloaWare/XyloWare/main/OnlineProfiles.vapeonline", true)))
 		end)
 		onlineprofiles = (success and result or {})
 		for i2,v2 in pairs(onlineprofiles) do
@@ -671,15 +671,15 @@ OnlineProfilesExitButton.MouseButton1Click:connect(function()
 end)
 
 GUI.CreateDivider()
----GUI.CreateCustomButton("Favorites", "vape/assets/FavoritesListIcon.png", UDim2.new(0, 17, 0, 14), function() end, function() end)
---GUI.CreateCustomButton("Text GUIVertical", "vape/assets/TextGUIIcon3.png", UDim2.new(1, -56, 0, 15), function() end, function() end)
+---GUI.CreateCustomButton("Favorites", "XyloWare/assets/FavoritesListIcon.png", UDim2.new(0, 17, 0, 14), function() end, function() end)
+--GUI.CreateCustomButton("Text GUIVertical", "XyloWare/assets/TextGUIIcon3.png", UDim2.new(1, -56, 0, 15), function() end, function() end)
 local TextGui = GuiLibrary.CreateCustomWindow({
 	["Name"] = "Text GUI", 
-	["Icon"] = "vape/assets/TextGUIIcon1.png", 
+	["Icon"] = "XyloWare/assets/TextGUIIcon1.png", 
 	["IconSize"] = 21
 })
 local TextGuiCircleObject = {["CircleList"] = {}}
---GUI.CreateCustomButton("Text GUI", "vape/assets/TextGUIIcon2.png", UDim2.new(1, -23, 0, 15), function() TextGui.SetVisible(true) end, function() TextGui.SetVisible(false) end, "OptionsButton")
+--GUI.CreateCustomButton("Text GUI", "XyloWare/assets/TextGUIIcon2.png", UDim2.new(1, -23, 0, 15), function() TextGui.SetVisible(true) end, function() TextGui.SetVisible(false) end, "OptionsButton")
 GUI.CreateCustomToggle({
 	["Name"] = "Text GUI", 
 	["Icon"] = "vape/assets/TextGUIIcon3.png",
@@ -704,7 +704,7 @@ onething.BackgroundColor3 = Color3.new(0, 0, 0)
 onething.BorderSizePixel = 0
 onething.BackgroundTransparency = 1
 onething.Visible = false
-onething.Image = getcustomassetfunc(translatedlogo and "vape/translations/"..GuiLibrary["Language"].."/VapeLogo3.png" or "vape/assets/VapeLogo3.png")
+onething.Image = getcustomassetfunc(translatedlogo and "XyloWare/translations/"..GuiLibrary["Language"].."/VapeLogo3.png" or "XyloWare/assets/VapeLogo3.png")
 local onething2 = Instance.new("ImageLabel")
 onething2.Parent = onething
 onething2.Size = UDim2.new(0, 41, 0, 24)
@@ -713,7 +713,7 @@ onething2.Position = UDim2.new(1, 0, 0, 1)
 onething2.BorderSizePixel = 0
 onething2.BackgroundColor3 = Color3.new(0, 0, 0)
 onething2.BackgroundTransparency = 1
-onething2.Image = getcustomassetfunc("vape/assets/VapeLogo4.png")
+onething2.Image = getcustomassetfunc("XyloWare/assets/VapeLogo4.png")
 local onething3 = onething:Clone()
 onething3.ImageColor3 = Color3.new(0, 0, 0)
 onething3.ImageTransparency = 0.5
@@ -1191,7 +1191,7 @@ shared.VapeTargetInfo = {
 }
 GUI.CreateCustomToggle({
 	["Name"] = "Target Info", 
-	["Icon"] = "vape/assets/TargetInfoIcon2.png", 
+	["Icon"] = "XyloWare/assets/TargetInfoIcon2.png", 
 	["Function"] = function(callback) TargetInfo.SetVisible(callback) end,
 	["Priority"] = 1
 })
@@ -1480,7 +1480,7 @@ local GUIbind = GUI.CreateGUIBind()
 
 local teleportfunc = game:GetService("Players").LocalPlayer.OnTeleport:Connect(function(State)
     if State == Enum.TeleportState.Started and not shared.VapeIndependent then
-		local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("vape/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/NewMainScript.lua", true))() end'
+		local teleportstr = 'shared.VapeSwitchServers = true if shared.VapeDeveloper then loadstring(readfile("XyloWare/NewMainScript.lua"))() else loadstring(game:HttpGet("https://raw.githubusercontent.com/XylaWare/XyloWare/main/NewMainScript.lua", true))() end'
 		if shared.VapeDeveloper then
 			teleportstr = 'shared.VapeDeveloper = true '..teleportstr
 		end
@@ -1616,7 +1616,7 @@ if shared.VapeIndependent then
 		if not shared.VapeSwitchServers then
 			if blatantmode["Enabled"] then
 				pcall(function()
-					local frame = GuiLibrary["CreateNotification"]("Blatant Enabled", "Vape is now in Blatant Mode.", 5.5, "assets/WarningNotification.png")
+					local frame = GuiLibrary["CreateNotification"]("Blatant Enabled", "Error.", 5.5, "assets/WarningNotification.png")
 					frame.Frame.Frame.ImageColor3 = Color3.fromRGB(236, 129, 44)
 				end)
 			end
@@ -1645,8 +1645,8 @@ else
 		end
 	end
 	if shared.VapePrivate then
-		if pcall(function() readfile("vapeprivate/CustomModules/"..game.PlaceId..".lua") end) then
-			loadstring(readfile("vapeprivate/CustomModules/"..game.PlaceId..".lua"))()
+		if pcall(function() readfile("XyloWareprivate/CustomModules/"..game.PlaceId..".lua") end) then
+			loadstring(readfile("XyloWareprivate/CustomModules/"..game.PlaceId..".lua"))()
 		end	
 	end
 	GuiLibrary["LoadSettings"](shared.VapeCustomProfile)
@@ -1662,7 +1662,7 @@ else
 	if not shared.VapeSwitchServers then
 		if blatantmode["Enabled"] then
 			pcall(function()
-				local frame = GuiLibrary["CreateNotification"]("Blatant Enabled", "Vape is now in Blatant Mode.", 5.5, "assets/WarningNotification.png")
+				local frame = GuiLibrary["CreateNotification"]("Blatant Enabled", "Error.", 5.5, "assets/WarningNotification.png")
 				frame.Frame.Frame.ImageColor3 = Color3.fromRGB(236, 129, 44)
 			end)
 		end
